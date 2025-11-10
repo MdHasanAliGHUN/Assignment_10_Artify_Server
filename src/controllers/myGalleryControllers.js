@@ -20,7 +20,7 @@ const getUserArtworks = async (req, res) => {
   }
 };
 
-// 🔹 Update artwork
+//  Update artwork
 const updateUserArtwork = async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
@@ -47,7 +47,7 @@ const updateUserArtwork = async (req, res) => {
   }
 };
 
-// 🔹 Delete artwork
+// Delete artwork
 const deleteUserArtwork = async (req, res) => {
   const { id } = req.params;
   try {
