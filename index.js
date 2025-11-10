@@ -10,11 +10,14 @@ app.use(express.json());
 app.use(cors());
 
 //Import artwork routes
-const artRouter = require("./src/routes/artWorkRoutes")
+const artRouter = require("./src/routes/artWorkRoutes");
+const galleryRouter = require("./src/routes/myGalleryRoutes");
 
 
 //Use artwork routes
 app.use("/api/artworks", artRouter);
+app.use("/api/my-gallery", galleryRouter);
+
 async function main() {
   await mongoose.connect(process.env.MONGODB_URL);
 }

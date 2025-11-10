@@ -30,6 +30,10 @@ const artworkSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  like: {
+    type: Number,
+    default: 0,
+  },
   userEmail: {
     type: String,
     required: true,
@@ -39,7 +43,6 @@ const artworkSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
 
 const Artwork = mongoose.model("Artwork", artworkSchema);
 module.exports = Artwork;

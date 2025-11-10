@@ -59,7 +59,7 @@ const getLatestArtworks = async (req, res) => {
 
 //Get Public Art works
 const getPublicArtWorks = async (req, res) => {
-  const searchQuery = req.query.search;
+  const searchQuery = req.query.search || "";
   try {
     const filter = {
       visibility: "public",
@@ -86,9 +86,64 @@ const getPublicArtWorks = async (req, res) => {
   }
 };
 
+//Get a sinle Art work for detailse
+const fetchArtworkDetails = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const artwork = await Artwork.findById(id);
+    if (!artwork) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Art work found successfully",
+      data: artwork,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+//Increase like
+const increaseLikeCount = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const artwork = await Artwork.findByIdAndUpdate(
+      id,
+      { $inc: { like: 1 } },
+      { new: true }
+    );
+    if (!artwork) {
+      return res.status(404).json({
+        success: false,
+        message: "Artwork Not Found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Like increased successfully",
+      data: artwork,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   addNewArtwork,
   getAllArtworks,
   getLatestArtworks,
   getPublicArtWorks,
+  fetchArtworkDetails,
+  increaseLikeCount,
 };
