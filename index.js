@@ -1,22 +1,30 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const admin = require("firebase-admin");
 const port = process.env.PORT || 5000;
 
-//Middleware to parse JSON requests
+//Firebase admin kye
+const serviceAccount = require("./artify-firebase-admin-kye.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+//App lavel middleware
+const app = express();
 app.use(express.json());
 app.use(cors());
 
 //Import artwork routes
 const artRouter = require("./src/routes/artWorkRoutes");
 const galleryRouter = require("./src/routes/myGalleryRoutes");
-
+const favoritesRouter = require("./src/routes/myFavoriteRoutes");
 
 //Use artwork routes
 app.use("/api/artworks", artRouter);
 app.use("/api/my-gallery", galleryRouter);
+app.use("/api/my-favorite", favoritesRouter);
 
 async function main() {
   await mongoose.connect(process.env.MONGODB_URL);

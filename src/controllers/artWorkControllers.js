@@ -89,7 +89,6 @@ const getPublicArtWorks = async (req, res) => {
 //Get a sinle Art work for detailse
 const fetchArtworkDetails = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const artwork = await Artwork.findById(id);
     if (!artwork) {
