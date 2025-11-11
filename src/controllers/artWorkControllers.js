@@ -66,6 +66,7 @@ const getPublicArtWorks = async (req, res) => {
       $or: [
         { title: { $regex: searchQuery, $options: "i" } },
         { userName: { $regex: searchQuery, $options: "i" } },
+        { category: { $regex: searchQuery, $options: "i" } },
       ],
     };
     const publicArtworks = await Artwork.find(filter).sort({

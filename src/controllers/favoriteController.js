@@ -51,10 +51,10 @@ const getUserFavorites = async (req, res) => {
     });
 
     res.status(200).json({
-        success: true,
-        message: "Favorite Data Fetched Successfully",
-        data: favorites,
-      });
+      success: true,
+      message: "Favorite Data Fetched Successfully",
+      data: favorites,
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
@@ -64,11 +64,31 @@ const getUserFavorites = async (req, res) => {
 const removeFavorite = async (req, res) => {
   try {
     const { id } = req.params;
-    await Favorite.findByIdAndDelete(id);
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Favorite ID is required",
+      });
+    }
+    const deletedFavorite = await Favorite.findByIdAndDelete(id);
 
-    res.status(200).json({ success: true, message: "Removed from favorites" });
+    if (!deletedFavorite) {
+      return res.status(404).json({
+        success: false,
+        message: "Favorite item not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Artwork removed from favorites successfully",
+      data: deletedFavorite,
+    });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
+    console.error("Error removing favorite:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred while removing the favorite",
+    });
   }
 };
 
