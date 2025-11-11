@@ -1,13 +1,14 @@
 const express = require("express");
+const {
+  addToFavorites,
+  getUserFavorites,
+  removeFavorite,
+} = require("../controllers/favoriteController");
 
-const favoritesRouter = express.Router();
-favoritesRouter.get("/", async (req, res) => {
-  try {
-    res.status(200).json({
-      success: true,
-      message: "Favorites",
-    });
-  } catch (error) {}
-});
+const favoriteRouter = express.Router();
 
-module.exports = favoritesRouter;
+favoriteRouter.post("/", addToFavorites);
+favoriteRouter.get("/:email", getUserFavorites);
+favoriteRouter.delete("/:id", removeFavorite);
+
+module.exports = favoriteRouter;
