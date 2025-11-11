@@ -1,7 +1,6 @@
 const admin = require("firebase-admin");
 const checkAuthentication = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   if (!authHeader) {
     return res.status(401).json({
       status: false,

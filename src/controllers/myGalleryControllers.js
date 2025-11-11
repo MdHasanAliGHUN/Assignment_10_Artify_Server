@@ -50,8 +50,10 @@ const updateUserArtwork = async (req, res) => {
 // Delete artwork
 const deleteUserArtwork = async (req, res) => {
   const { id } = req.params;
+  console.log("Hello")
   try {
     const artwork = await Artwork.findByIdAndDelete(id);
+    
     if (!artwork) {
       return res.status(404).json({
         success: false,
