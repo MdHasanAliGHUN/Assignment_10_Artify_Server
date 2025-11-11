@@ -5,15 +5,15 @@ const {
   deleteUserArtwork,
 } = require("../controllers/myGalleryControllers");
 
+const checkAuthentication = require("../middlewares/checkAuthentication");
+
 const galleryRouter = express.Router();
 
 // GET user artworks
-galleryRouter.get("/:email", getUserArtworks);
-
+galleryRouter.get("/:email", checkAuthentication, getUserArtworks);
 // PUT update artwork
-galleryRouter.put("/:id", updateUserArtwork);
-
+galleryRouter.put("/:id", checkAuthentication, updateUserArtwork);
 // DELETE artwork
-galleryRouter.delete("/:id", deleteUserArtwork);
+galleryRouter.delete("/:id", checkAuthentication, deleteUserArtwork);
 
 module.exports = galleryRouter;

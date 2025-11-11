@@ -5,10 +5,12 @@ const {
   removeFavorite,
 } = require("../controllers/favoriteController");
 
+const checkAuthentication = require("../middlewares/checkAuthentication");
+
 const favoriteRouter = express.Router();
 
-favoriteRouter.post("/", addToFavorites);
-favoriteRouter.get("/:email", getUserFavorites);
-favoriteRouter.delete("/:id", removeFavorite);
+favoriteRouter.post("/", checkAuthentication, addToFavorites);
+favoriteRouter.get("/:email", checkAuthentication, getUserFavorites);
+favoriteRouter.delete("/:id", checkAuthentication, removeFavorite);
 
 module.exports = favoriteRouter;

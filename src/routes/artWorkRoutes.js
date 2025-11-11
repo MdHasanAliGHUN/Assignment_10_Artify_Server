@@ -14,10 +14,10 @@ const artRouter = express.Router();
 
 // Route setup
 artRouter.post("/", checkAuthentication, addNewArtwork);
-artRouter.get("/",checkAuthentication, getAllArtworks);
+artRouter.get("/", checkAuthentication, getAllArtworks);
 artRouter.get("/latest", getLatestArtworks);
 artRouter.get("/public", getPublicArtWorks);
-artRouter.get("/:id", fetchArtworkDetails);
-artRouter.patch("/like/:id", increaseLikeCount);
+artRouter.get("/:id", checkAuthentication, fetchArtworkDetails);
+artRouter.patch("/like/:id", checkAuthentication, increaseLikeCount);
 
 module.exports = artRouter;
