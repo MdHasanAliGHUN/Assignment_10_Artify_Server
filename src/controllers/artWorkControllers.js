@@ -98,10 +98,19 @@ const fetchArtworkDetails = async (req, res) => {
         message: "User Not Found",
       });
     }
+
+    const artistEmail = artwork.userEmail;
+    const totalArtworks = await Artwork.countDocuments({
+      userEmail: artistEmail,
+    });
+
     res.status(200).json({
       success: true,
       message: "Art work found successfully",
-      data: artwork,
+      data: {
+        ...artwork.toObject(),
+        totalArtworks,
+      },
     });
   } catch (error) {
     res.status(500).json({
