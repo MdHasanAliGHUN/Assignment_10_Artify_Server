@@ -24,3 +24,4 @@ artify-firebase-admin-kye.json
 *.njsproj
 *.sln
 *.sw?
+.vercel
