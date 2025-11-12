@@ -27,7 +27,9 @@ app.use("/api/my-gallery", galleryRouter);
 app.use("/api/my-favorite", favoritesRouter);
 
 async function main() {
-  await mongoose.connect(process.env.MONGODB_URL);
+  await mongoose.connect(process.env.MONGODB_URL, {
+    serverSelectionTimeoutMS: 10000,
+  });
 }
 
 main()
